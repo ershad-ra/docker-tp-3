@@ -54,5 +54,47 @@ npm start
 ```
 ### L’application doit s’ouvrir sur `http://localhost:3000` !
 
-![image](https://github.com/user-attachments/assets/d2fdf04d-af44-4559-b9c1-acbb77aaf986)
 
+## Créer le `Dockerfile` avec Multi-Stage Build
+- À la racine du projet `my-app`, crée un fichier nommé `Dockerfile` :
+```yaml
+# Étape 1 : Construction de l’application React
+FROM node:18-alpine AS build
+WORKDIR /app
+COPY package.json package-lock.json ./
+RUN npm install
+COPY . .
+RUN npm run build
+
+# Étape 2 : Serveur web pour l’application
+FROM nginx:alpine
+COPY --from=build /app/build /usr/share/nginx/html
+EXPOSE 80
+CMD ["nginx", "-g", "daemon off;"]
+```
+- Dans le dossier `my-app`, exécute les commandes suivantes :
+
+  - Construire l’image :
+```bash
+docker build -t react-app .
+```
+  - Lancer le conteneur :
+```bash 
+docker run -d -p 8080:80 react-app
+```
+
+### L’application doit être accessible sur `http://localhost:8080`.
+
+### Ajouter un `.dockerignore` pour optimiser la build
+
+- Crée un fichier `.dockerignore` à la racine du projet avec :
+```nginx
+node_modules
+build
+.dockerignore
+Dockerfile
+.git
+```
+### Cela permet d'éviter de copier inutilement des fichiers lors de la build.
+
+![image](https://github.com/user-attachments/assets/d2fdf04d-af44-4559-b9c1-acbb77aaf986)
