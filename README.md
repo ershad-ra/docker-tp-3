@@ -53,3 +53,6 @@ npm start
 
 ```
 ### L’application doit s’ouvrir sur `http://localhost:3000` !
+
+![image](https://github.com/user-attachments/assets/d2fdf04d-af44-4559-b9c1-acbb77aaf986)
+
