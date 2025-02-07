@@ -79,8 +79,8 @@ COPY --from=build /app/build /usr/share/nginx/html
 EXPOSE 80
 CMD ["nginx", "-g", "daemon off;"]
 ```
-- Étape 1 : Construire l'application` React`
-  - On prend une image légère de` Node.js `(basée sur `Alpine` Linux) pour compiler notre application `React`.
+### Étape 1 : Construire l'application` React`
+- On prend une image légère de` Node.js `(basée sur `Alpine` Linux) pour compiler notre application `React`.
 ```bash
 FROM node:18-alpine AS build
 
@@ -112,7 +112,7 @@ COPY . .
 RUN npm run build
 
 ```
-- Étape 2 : Utiliser un serveur `Nginx`
+### Étape 2 : Utiliser un serveur `Nginx`
 
   - On prend une image légère de `Nginx `pour afficher les fichiers` React`.
   - 👉 Pourquoi` Nginx `? Parce qu’il est rapide et optimisé pour servir des fichiers statiques.
@@ -137,7 +137,7 @@ CMD ["nginx", "-g", "daemon off;"]
 
 ```
 
-### construire l'image et lancer le conteneur
+### Étape 3 : Construire l'image et lancer le conteneur
 - Dans le dossier `my-app`, exécute les commandes suivantes :
 
   - Construire l’image :
